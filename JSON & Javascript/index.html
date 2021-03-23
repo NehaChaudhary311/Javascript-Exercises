@@ -5,12 +5,17 @@
   </head>
   <body>
     <h1>This is a web page</h1>
+    <div id="pizzaName"></div>
     <script>
       fetch("pizzas.json").then((response) =>
         response.json().then((data) => {
-          console.log(data);
+          console.log(data.name);
+          document.querySelector("#pizzaName").innerText = data.name;
         })
       );
     </script>
   </body>
 </html>
+<!--
+This is display "Tandoori Paneer under div tag with id = 'pizzaName'
+-->
