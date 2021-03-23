@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "name": "Tandoori Paneer",
+  "img": "/images/pizza.png",
+  "price": 200,
+  "sizes": ["100g", "200g", "500g"],
+  "description": "Spiced paneer, Onion, Green Capsicum & Red Paprika in Tandoori Sauce",
+  "cheese": ["regular", "extra", "no cheese"]
+}
