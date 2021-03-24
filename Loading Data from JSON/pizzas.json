@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Tandoori Paneer",
+    "img": "/images/pizza.png",
+    "price": 200,
+    "sizes": [0, 100, 200],
+    "description": "Spiced paneer, Onion, Green Capsicum & Red Paprika in Tandoori Sauce",
+    "cheese": [0, 100, 0]
+  },
+  {
+    "id": 2,
+    "name": "Veggie Supreme",
+    "img": "images/pizza.png",
+    "price": 250,
+    "sizes": [0, 100, 200],
+    "description": "Black Olives, Green Capsicum, Mushroom, Onion, Red Paprika, Sweet Corn",
+    "cheese": [0, 100, 0]
+  },
+  {
+    "id": 3,
+    "name": "Veg Exotica",
+    "img": "images/pizza.png",
+    "price": 300,
+    "sizes": [0, 100, 200],
+    "description": "Baby Corn, Black Olives, Green Capsicum, Jalapeno, Red Capsicum",
+    "cheese": [0, 100, 0]
+  }
+]
