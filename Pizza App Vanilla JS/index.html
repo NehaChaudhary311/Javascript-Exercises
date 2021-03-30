@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Pizza Shop</title>
+    <meta name="description" content="This is the description" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1 class="pizza-name pizza-name-large">BUY PIZZAS</h1>
+    </header>
+    <section class="container content-section">
+      <h2 class="section-header">PIZZAS</h2>
+      <div id="all-items" class="shop-items"></div>
+    </section>
+    <section class="container content-section">
+      <h2 class="section-header">CART</h2>
+      <div class="cart-row">
+        <span class="cart-item cart-header cart-column">ITEM</span>
+        <span class="cart-price cart-header cart-column">PRICE</span>
+        <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-total">
+        <strong class="cart-total-title">Total</strong>
+        <span class="cart-total-price">Rs. 0</span>
+      </div>
+      <button class="btn btn-primary btn-purchase" type="button">ORDER</button>
+    </section>
+    <script src="store.js"></script>
+  </body>
+</html>
