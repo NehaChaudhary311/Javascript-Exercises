@@ -1,0 +1,28 @@
+{
+  "pizza": [
+    {
+      "name": "Tandoori Pizza",
+      "image": "Images/pizza.png",
+      "price": "Rs.200",
+      "sizes": { "Small": 100, "Medium": 200, "Large": 300 }
+    },
+    {
+      "name": "Veggie Supreme",
+      "image": "Images/pizza.png",
+      "price": "Rs.250",
+      "sizes": { "Small": 100, "Medium": 200, "Large": 300 }
+    },
+    {
+      "name": "Veg Exotica",
+      "image": "Images/pizza.png",
+      "price": "Rs.300",
+      "sizes": { "Small": 100, "Medium": 200, "Large": 300 }
+    },
+    {
+      "name": "Chicken Pepper Crunch",
+      "image": "Images/pizza.png",
+      "price": "Rs.400",
+      "sizes": { "Small": 100, "Medium": 200, "Large": 300 }
+    }
+  ]
+}
