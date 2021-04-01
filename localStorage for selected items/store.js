@@ -210,9 +210,21 @@ function addONe(event) {
   let button = event.target; //stores the button class like <button class="btn btn-primary shop-item-button-add">+</button>
   let shopItem = button.parentElement.parentElement;
   //shopItem stores <div class="shop-item">title, image, details </div>
+  let shopId = shopItem.getAttribute("id"); //get the ID of the shopItem
+
   let recParent = button.parentElement; //stores shop-item-details which is under "shop-item" in heirarchy
   let cinput = recParent.getElementsByClassName("shop-item-input")[0]; //will return the first <input class="shop-item-input">
-  cinput.value++; //cinput.value stores the current quantity
+  cinput.value++; //cinput.value stores the current quantity - typeof string
+  var locStore = JSON.parse(localStorage.getItem("selectedProduct"));
+  locStore.forEach((item) => {
+    if (item.productID === shopId) {
+      console.log("Checking for ID");
+      item.quantity = cinput.value;
+      console.log(item.quantity);
+      localStorage.setItem("selectedProduct", JSON.stringify(item));
+    }
+  });
+
   let title = shopItem.getElementsByClassName("shop-item-title")[0].innerText;
   //let cinTitle = title.innerHTML;
   var cartItems = document.getElementsByClassName("cart-items")[0]; //will return <div class="cart-items"> which is in CART
@@ -255,7 +267,7 @@ function addToCartClicked(event) {
   //Getting all the details of the pizza item that was clickedc
   var button = event.target;
   var shopItem = button.parentElement.parentElement; //shopItem stores the container details <div class="shop-item" id="1">
-  var id = shopItem.getAttribute("id"); //fetch the id attached to the shopItem
+  var id = shopItem.getAttribute("id"); //fetch the id attached to the shopItemv - working fine - verified
   var title = shopItem.getElementsByClassName("shop-item-title")[0].innerText;
   var price = shopItem.getElementsByClassName("shop-item-price")[0].innerText; //in the form of Rs. 400
   var sizePrices = document.getElementsByName("sizes"); //get all the radio buttons which have name="sizes"
@@ -270,23 +282,53 @@ function addToCartClicked(event) {
   }
   var imageSrc = shopItem.getElementsByClassName("shop-item-image")[0].src; //http://127.0.0.1:5500/Images/pizza.png
   price = parseFloat(price.replace("Rs.", "")) + parseFloat(size_price);
+  /*
+  ----------------------------------------------------
+  STORING THE SELECTED ITEMS IN LOCAL STORAGE - Start -  Successful!!
+  ----------------------------------------------------
+  */
+  // let products = {
+  //   productId: id,
+  //   image: imageSrc,
+  //   price: price,
+  //   title: title,
+  //   sizePrice: size_price,
+  //   quantity: 0,
+  // };
+  // productsString = JSON.stringify(products);
+  // var oldItems = localStorage.getItem("selectedProduct");
+  // //console.log("Check me");
+  // //console.log(typeof oldItems);
+  // //I tried this too
+  // //https://stackoverflow.com/questions/19902670/append-objects-in-local-storage/19902764#:~:text=Basically%20you%20have%20to%20retrieve,write%20it%20back%20to%20localStorage%20.&text=There%20are%20two%20options%3A,new%20element%2C%20then%20use%20setItem%20.
+  // var newItems = oldItems ? oldItems + "," + productsString : productsString;
+  // localStorage.setItem("selectedProduct", newItems);
 
-  //console.log(price);
-  //price = parseFloat(price.replace("Rs.", "")) + size_price;
-  //addItemToCart(id, title, price, imageSrc, size_price);
+  var newItem = {
+    productID: id,
+    image: imageSrc,
+    price: price,
+    title: title,
+    sizePrice: size_price,
+    quantity: 1,
+  };
+  if (localStorage.getItem("selectedProduct") === null) {
+    var oldItems = [];
 
-  //STORING THE SELECTED ITEMS IN LOCAL STORAGE
-  let products = [
-    {
-      productId: id,
-      image: imageSrc,
-      price: price,
-      title: title,
-      sizePrice: size_price,
-    },
-  ];
-  localStorage.setItem("selectedProduct", JSON.stringify(products));
-  console.log(JSON.stringify(products));
+    console.log("Check");
+  } else {
+    var oldItems = JSON.parse(localStorage.getItem("selectedProduct"));
+  }
+  oldItems.push(newItem);
+  localStorage.setItem("selectedProduct", JSON.stringify(oldItems));
+  /*
+  ----------------------------------------------------
+  STORING THE SELECTED ITEMS IN LOCAL STORAGE - End
+  ----------------------------------------------------
+  */
+  // var itemsInLocalStore = localStorage.getItem("selectedProduct");
+  // console.log(itemsInLocalStore);
+
   var changebutt = button.parentElement; //Will store <div class="shop-item-details">Price, button -, input, button +
 
   let butt2 = document.createElement("button");
@@ -313,7 +355,9 @@ function addToCartClicked(event) {
 }
 //utility function for addToCartClicked
 //This will make sure that a new cart row is created under CART
-function addItemToCart(id, title, price, imageSrc, size_price) {
+function addItemToCart() {
+  var itemsInLocalStore = localStorage.getItem("selectedProduct");
+  //console.log(JSON.parse(itemsInLocalStore)); //JSON.parse converts text into a Javascript object
   var cartRow = document.createElement("div");
   cartRow.classList.add("cart-row");
   var cartItems = document.getElementsByClassName("cart-items")[0];
