@@ -281,8 +281,6 @@ function minusONe(event) {
   updateCartTotal();
 }
 
-//When Add To Cart is clicked, this button needs to be removed, and butt2, butt1 and input should appear using createElement()
-//Do not forget to append the newly created Elements
 //When Add to cart is clicked, this function is triggered
 function addToCartClicked(event) {
   //Getting all the details of the pizza item that was clicked
@@ -342,6 +340,7 @@ function addToCartClicked(event) {
   }
   oldItems.push(newItem);
   localStorage.setItem("selectedProduct", JSON.stringify(oldItems));
+  addItemToCart();
   /*
   ----------------------------------------------------
   STORING THE SELECTED ITEMS IN LOCAL STORAGE - End
@@ -349,7 +348,8 @@ function addToCartClicked(event) {
   */
   // var itemsInLocalStore = localStorage.getItem("selectedProduct");
   // console.log(itemsInLocalStore);
-
+  //When Add To Cart is clicked, this button needs to be removed, and butt2, butt1 and input should appear using createElement()
+  //Do not forget to append the newly created Elements
   var changebutt = button.parentElement; //Will store <div class="shop-item-details">Price, button -, input, button +
 
   let butt2 = document.createElement("button");
@@ -377,24 +377,28 @@ function addToCartClicked(event) {
 //utility function for addToCartClicked
 //This will make sure that a new cart row is created under CART
 function addItemToCart() {
-  var itemsInLocalStore = localStorage.getItem("selectedProduct");
-  //console.log(JSON.parse(itemsInLocalStore)); //JSON.parse converts text into a Javascript object
   var cartRow = document.createElement("div");
   cartRow.classList.add("cart-row");
-  var cartItems = document.getElementsByClassName("cart-items")[0];
+  var cartItems = document.getElementsByClassName("cart-items")[0]; //<div class="cart-items">
   var cartItemNames = cartItems.getElementsByClassName("cart-item-title");
   //Putting the data
-  var cartRowContents = `
+  var locStore = JSON.parse(localStorage.getItem("selectedProduct"));
+  var cartRowContents = locStore.map((item) => {
+    return `
         <div class="cart-item cart-column">
-            <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
-            <span class="cart-item-title">${title}</span>
-            <span class="cart-item-size">"Rs.${size_price}"</span>
+            <img class="cart-item-image" src="${item.image}" width="100" height="100">
+            <span class="cart-item-title">${item.title}</span>
+            <span class="cart-item-size">"Rs.${item.sizePrice}"</span>
         </div>
-        <span class="cart-price cart-column">${price}</span>
+        <span class="cart-price cart-column">${item.price}</span>
         <div class="cart-quantity cart-column">
             <input class="cart-quantity-input" type="number" value="1">
             <button class="btn btn-danger" type="button">REMOVE</button>
         </div>`;
+  });
+  console.log(cartRowContents);
+  cartRowContents = cartRowContents.join("");
+
   cartRow.innerHTML = cartRowContents;
   cartItems.append(cartRow);
   cartRow
@@ -406,6 +410,11 @@ function addItemToCart() {
 }
 
 function updateCartTotal() {
+  // var locStore = JSON.parse(localStorage.getItem("selectedProduct"));
+  // locStore.forEach((item) => {
+
+  //   }
+  // });
   var cartItemContainer = document.getElementsByClassName("cart-items")[0];
   var cartRows = cartItemContainer.getElementsByClassName("cart-row");
   var total = 0;
