@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+  <title>Delivery Details</title>
+  <link href="deleivery.css" rel="stylesheet" type="text/css" />
+  <script src="stores.js"></script>
+</head>
+<body>
+    <header class="main-header">
+        <h1 class="pizza-name pizza-name-large">BUY PIZZAS</h1>
+      </header>
+  <div class="container" id="delivery">
+    <h6>Delivery Address</h3>
+    <form id="address">
+      <div class="form-group">
+        <label for="firstName">Name</label>
+        <input type="text" class="form-control" id="firstName" />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" />
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" class="form-control" id="phoneNumber" />
+      </div>
+      <div class="form-group">
+        <label for="emailAddress">Email</label>
+        <input type="text" class="form-control" id="emailAddress" />
+      </div>
+      <div class="form-group">
+        <label for="streetAddress">Street Address</label>
+        <input type="text" class="form-control" id="streetAddress" />
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" />
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+        <input type="text" class="form-control" id="state" />
+      </div>
+      <div class="form-group">
+        <label for="zipcode">Zip Code</label>
+        <input type="text" class="form-control" id="zipcode" />
+      </div>
+      <button type="submit" class="landingButton" id='submitAddBtn' onclick="storeInLocalStorage()">
+        Submit Address</a>
+      </button>
+      <br />
+      <br />
+    </form>
+  </div>
+  <script type='text/javascript'>
+    //localStorage.setItem('name', 'Neha');
+    //localStorage.removeItem('name');
+    //console.log(localStorage); 
+    //local storage only accepts strings
+     function storeInLocalStorage(){
+       let formData ={
+          fname: document.getElementById('firstName').value,
+          lname: document.getElementById('lastName').value,
+          phone: document.getElementById('phoneNumber').value,
+          email: document.getElementById('emailAddress').value,
+          streetAdd: document.getElementById('streetAddress').value,
+          city: document.getElementById('city').value,
+          state: document.getElementById('state').value,
+          zipcode: document.getElementById('zipcode').value,
+       }
+       localStorage.setItem('formData', JSON.stringify(formData));
+     }
+  </script>
+  <script type='text/javascript'>
+    document.getElementById('submitAddBtn').onclick=function(){
+      alert("Thank you. Your order has been dispatched.");
+    };
+  </script>
+</body>
+
