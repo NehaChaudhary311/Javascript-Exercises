@@ -216,14 +216,25 @@ function addONe(event) {
   let cinput = recParent.getElementsByClassName("shop-item-input")[0]; //will return the first <input class="shop-item-input">
   cinput.value++; //cinput.value stores the current quantity - typeof string
   var locStore = JSON.parse(localStorage.getItem("selectedProduct"));
+
+  // console.log(locStore.length);
+  // for (var i = 0; i < locStore.length; i++) {
+  //   if (shopId === locStore[i].productID) {
+  //     //look for match with id
+  //     locStore[i].quantity += 1; //add one
+  //     break; //exit loop since you found the selected pizza
+  //   }
+  // }
+  // localStorage.setItem("selectedProduct", JSON.stringify(locStore)); //put the object back
+
   locStore.forEach((item) => {
+    console.log(item.productID);
     if (item.productID === shopId) {
-      console.log("Checking for ID");
-      item.quantity = cinput.value;
-      console.log(item.quantity);
-      localStorage.setItem("selectedProduct", JSON.stringify(item));
+      //look for match with ID
+      item.quantity = cinput.value; //add one
     }
   });
+  localStorage.setItem("selectedProduct", JSON.stringify(locStore)); //put the object back
 
   let title = shopItem.getElementsByClassName("shop-item-title")[0].innerText;
   //let cinTitle = title.innerHTML;
@@ -242,11 +253,21 @@ function addONe(event) {
 function minusONe(event) {
   let button = event.target;
   let shopItem = button.parentElement.parentElement;
+  let shopId = shopItem.getAttribute("id"); //get the ID of the shopItem
   let recParent = button.parentElement;
   let cinput = recParent.getElementsByClassName("shop-item-input")[0];
   if (cinput.value > 1) {
     cinput.value--;
   }
+  var locStore = JSON.parse(localStorage.getItem("selectedProduct"));
+  locStore.forEach((item) => {
+    console.log(item.productID);
+    if (item.productID === shopId) {
+      //look for match with ID
+      item.quantity = cinput.value;
+    }
+  });
+  localStorage.setItem("selectedProduct", JSON.stringify(locStore)); //put the object back
   let title = shopItem.getElementsByClassName("shop-item-title")[0].innerText;
   var cartItems = document.getElementsByClassName("cart-items")[0];
   var cartItemNames = cartItems.getElementsByClassName("cart-item-title");
@@ -264,7 +285,7 @@ function minusONe(event) {
 //Do not forget to append the newly created Elements
 //When Add to cart is clicked, this function is triggered
 function addToCartClicked(event) {
-  //Getting all the details of the pizza item that was clickedc
+  //Getting all the details of the pizza item that was clicked
   var button = event.target;
   var shopItem = button.parentElement.parentElement; //shopItem stores the container details <div class="shop-item" id="1">
   var id = shopItem.getAttribute("id"); //fetch the id attached to the shopItemv - working fine - verified
