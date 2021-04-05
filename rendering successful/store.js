@@ -151,7 +151,20 @@ function orderClicked() {
   }
   updateCartTotal();
 }
-
+// function removeLocalStorageHelper(item, pizzaId) {
+//   console.log(item.productID);
+//   console.log(pizzaId);
+//   if (item.productID == pizzaId) {
+//     console.log("Working fine");
+//     localStorage.removeItem(item);
+//     console.log(localStorage);
+//   }
+// }
+function removeFromLocalStorage(pizzaId) {
+  var locStore = JSON.parse(localStorage.getItem("selectedProduct"));
+  var temp = locStore.filter((item) => item.productID !== pizzaId);
+  localStorage.setItem("selectedProduct", JSON.stringify(temp));
+}
 function removeCartItem(event) {
   var buttonClicked = event.target;
   let cartItem = buttonClicked.parentElement.parentElement; //cartItem wil store <div class="cart-row">
@@ -161,6 +174,7 @@ function removeCartItem(event) {
   var shopItems = document.getElementsByClassName("shop-items")[0]; //for fixing the + - button to "Add to Cart button" in the menu list
   var shopItemForId = document.getElementsByClassName("shop-item");
   var pizzaId = shopItemForId.item(cartItemId - 1); //minus 1 cause of index issues
+  pizzaId = pizzaId.getAttribute("id");
   var shopItemNames = shopItems.getElementsByClassName("shop-item-title"); //will return an HTMLCollection of 4 items with span.shop-item-
 
   /*
@@ -216,6 +230,8 @@ function removeCartItem(event) {
   //   }
   // }
   buttonClicked.parentElement.parentElement.remove();
+  removeFromLocalStorage(pizzaId);
+
   updateCartTotal();
 }
 
