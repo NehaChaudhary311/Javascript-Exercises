@@ -154,45 +154,67 @@ function orderClicked() {
 
 function removeCartItem(event) {
   var buttonClicked = event.target;
-  //console.log(buttonClicked);
   let cartItem = buttonClicked.parentElement.parentElement; //cartItem wil store <div class="cart-row">
+  let cartItemId = cartItem.id;
   let title = cartItem.getElementsByClassName("cart-item-title")[0].innerText; //will store like Tandoori Paneer
+  //shopItems stores <div id=​"all-items" class=​"shop-items">​…​</div>​
   var shopItems = document.getElementsByClassName("shop-items")[0]; //for fixing the + - button to "Add to Cart button" in the menu list
+  var shopItemForId = document.getElementsByClassName("shop-item");
+  var pizzaId = shopItemForId.item(cartItemId - 1); //minus 1 cause of index issues
   var shopItemNames = shopItems.getElementsByClassName("shop-item-title"); //will return an HTMLCollection of 4 items with span.shop-item-
+
   /*
-  console.log(
-    shopItemNames[0].parentElement.parentElement.getElementsByClassName(
-      "shop-item-button-minus"
-    )
-  );
+  -------------------------------------
+  REMOVING ADD ITEM TO CART BUTTON and adding +, -, input for the pizza item which is being identified by the ID
+  -------------------------------------
   */
-  for (var i = 0; i < shopItemNames.length; i++) {
-    //loop through all the shopItemNames available in your application, and check if it's title matches with your chosen pizza title to be removed
-    //if it matches, remove minus button, add button, and input box.
-    //And insert a button - ADD TO CART
-    //DOn't forget to append that button to
-    if (shopItemNames[i].innerText == title) {
-      shopItemNames[i].parentElement
-        .getElementsByClassName("shop-item-details")[0]
-        .getElementsByClassName("shop-item-button-minus")[0]
-        .remove();
-      shopItemNames[i].parentElement
-        .getElementsByClassName("shop-item-details")[0]
-        .getElementsByClassName("shop-item-button-add")[0]
-        .remove();
-      shopItemNames[i].parentElement
-        .getElementsByClassName("shop-item-details")[0]
-        .getElementsByClassName("shop-item-input")[0]
-        .remove();
-      let butt = document.createElement("button");
-      butt.classList.add("btn", "btn-primary", "shop-item-button");
-      butt.innerText = "ADD TO CART";
-      butt.onclick = addToCartClicked;
-      shopItemNames[i].parentElement
-        .getElementsByClassName("shop-item-details")[0]
-        .appendChild(butt);
-    }
-  }
+  shopItemNames[cartItemId - 1].parentElement
+    .getElementsByClassName("shop-item-details")[0]
+    .getElementsByClassName("shop-item-button-minus")[0]
+    .remove();
+  shopItemNames[cartItemId - 1].parentElement
+    .getElementsByClassName("shop-item-details")[0]
+    .getElementsByClassName("shop-item-button-add")[0]
+    .remove();
+  shopItemNames[cartItemId - 1].parentElement
+    .getElementsByClassName("shop-item-details")[0]
+    .getElementsByClassName("shop-item-input")[0]
+    .remove();
+  let butt = document.createElement("button");
+  butt.classList.add("btn", "btn-primary", "shop-item-button");
+  butt.innerText = "ADD TO CART";
+  butt.onclick = addToCartClicked;
+  shopItemNames[cartItemId - 1].parentElement
+    .getElementsByClassName("shop-item-details")[0]
+    .appendChild(butt);
+
+  // for (var i = 0; i < shopItemNames.length; i++) {
+  //   //loop through all the shopItemNames available in your application, and check if it's title matches with your chosen pizza title to be removed
+  //   //if it matches, remove minus button, add button, and input box.
+  //   //And insert a button - ADD TO CART
+  //   //DOn't forget to append that button to
+  //   if (shopItemNames[i].innerText == title) {
+  //     shopItemNames[i].parentElement
+  //       .getElementsByClassName("shop-item-details")[0]
+  //       .getElementsByClassName("shop-item-button-minus")[0]
+  //       .remove();
+  //     shopItemNames[i].parentElement
+  //       .getElementsByClassName("shop-item-details")[0]
+  //       .getElementsByClassName("shop-item-button-add")[0]
+  //       .remove();
+  //     shopItemNames[i].parentElement
+  //       .getElementsByClassName("shop-item-details")[0]
+  //       .getElementsByClassName("shop-item-input")[0]
+  //       .remove();
+  //     let butt = document.createElement("button");
+  //     butt.classList.add("btn", "btn-primary", "shop-item-button");
+  //     butt.innerText = "ADD TO CART";
+  //     butt.onclick = addToCartClicked;
+  //     shopItemNames[i].parentElement
+  //       .getElementsByClassName("shop-item-details")[0]
+  //       .appendChild(butt);
+  //   }
+  // }
   buttonClicked.parentElement.parentElement.remove();
   updateCartTotal();
 }
@@ -379,6 +401,7 @@ function addToCartClicked(event) {
 function addItemToCart(item) {
   var cartRow = document.createElement("div");
   cartRow.classList.add("cart-row");
+  cartRow.id = item.productID;
   var cartItems = document.getElementsByClassName("cart-items")[0]; //<div class="cart-items">
   var cartItemNames = cartItems.getElementsByClassName("cart-item-title");
   //Putting the data
